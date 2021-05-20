@@ -1,6 +1,6 @@
 module.exports = {
     name: 'test',
-    roles: ['Users'],
+    roles: ['🌟'],
     callback: message => {
         message.channel.send("Test(s) Successful");
     }
