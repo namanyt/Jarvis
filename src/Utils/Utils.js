@@ -1,10 +1,13 @@
 const chalk = require('chalk');
 const timestamp = chalk.hex(`#808080`).bold(`[${new Date().toLocaleTimeString()}]`);
+const YAML = require('yaml');
+const fs = require('fs');
+const config = YAML.parse(fs.readFileSync('./src/config.yml', 'utf-8'), { prettyErrors: true });
 
 const botOnlineColor = chalk.hex(`#0084db`);
 
 function info(message) {
-    return console.log(`${timestamp}  ${message}`.grey);
+    return console.log(`${timestamp}  ${message}`);
 }
 
 /**
@@ -28,4 +31,4 @@ function botOnline() {
     return console.log(onlineMessage);
 }
 
-module.exports = { info, error, botOnline };
+module.exports = { info, error, botOnline, config };
