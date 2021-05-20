@@ -56,11 +56,12 @@ module.exports = (client, options) => {
         callback
     } = options;
 
-    info((`Registering ${chalk.cyan.italic(name)} command`));
-
+    
     if (typeof name === 'string') {
         name = [name]
     }
+    
+    info((`Registering ${chalk.cyan.italic(name[0])} command`));
 
     if (permissions.length) {
         if (typeof permissions === 'string') {

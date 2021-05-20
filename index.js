@@ -1,4 +1,4 @@
-const { info, config, botOnline } = require('./src/Utils/Utils');
+const { info, config, botOnline, mongo } = require('./src/Utils/Utils');
 const chalk = require('chalk');
 const discord = require('discord.js');
 const fs = require('fs');
@@ -6,9 +6,15 @@ const path = require('path');
 
 const client = new discord.Client();
 
-client.on("ready", () => {
+client.on("ready", async() => {
     botOnline();
-
+    await mongo().then(mongoose => {
+        try {
+            info(`${chalk.green.bold('[MONGODB]')} ${'Connected to '+ chalk.green.bold('MongoDB')}`);
+        } finally {
+            mongoose.connection.close();
+        }
+    });
     readCommand('src/Commands')
 });
 
