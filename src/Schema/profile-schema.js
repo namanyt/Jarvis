@@ -5,7 +5,7 @@ const reqString = {
     required: true
 }
 const reqNumber = {
-    type: String,
+    type: Number,
     required: true
 }
 

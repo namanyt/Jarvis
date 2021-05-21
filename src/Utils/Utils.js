@@ -33,7 +33,7 @@ function botOnline() {
 }
 
 const mongo = async () => {
-    await mongoose.connect(mongoPath, { useNewUrlParser: true, useUnifiedTopology: true});
+    await mongoose.connect(mongoPath, { useCreateIndex: true, useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true, });
     return mongoose;
 }
 const getTimeDiffrence = async (date1, date2) => {

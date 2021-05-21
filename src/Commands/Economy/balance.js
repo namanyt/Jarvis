@@ -13,6 +13,7 @@ module.exports = {
      */
     callback: async message => {
         const target = message.mentions.users.first() || message.author
-        message.channel.send(balanceEmbed(target, await economy.getCoins(message.guild, target)[0], await economy.getCoins(message.guild, target)[1]));
+        const amount = await economy.getCoins(message.guild, target)
+        message.channel.send(balanceEmbed(target, await amount[0], await amount[1]));
     } 
 }

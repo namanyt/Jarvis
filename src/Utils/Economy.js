@@ -18,15 +18,56 @@ module.exports = {
                 const result = await profileSchema.findOne({ userID: user.id })
                 let wallet = 100;
                 let bank = 0;
-                if (result) wallet = result.wallet, bank = result.bank
+                if (result) {wallet = result.wallet, bank = result.bank}
                 else await new profileSchema({ userID: user.id, username: user.tag, wallet, bank }).save()
                 return [wallet, bank];
             } finally {
-                mongoose.connection.close()
+                //mongoose.connection.close()
             }
         })
     },
-    getSomething: async (guild, user) => {
-        return 'something'
-    }
+    depositBalance: async (guild, user, amount) => {
+        return await mongo().then(async mongoose => {
+            try {
+                let data = await profileSchema.findOne({ userID: user.id })
+                const updatesBalance = profileSchema.findOneAndUpdate({ userID: user.id }, { wallet: data.wallet - amount, bank: data.bank + amount })
+                return updatesBalance
+            } finally {
+                //mongoose.connection.close()
+            } 
+        })
+    },
+    depositBalanceAll: async (guild, user) => {
+        return await mongo().then(async mongoose => {
+            try {
+                let data = await profileSchema.findOne({ userID: user.id })
+                const updatesBalance = profileSchema.findOneAndUpdate({ userID: user.id }, { wallet: data.wallet - data.wallet, bank: data.bank + data.wallet })
+                return updatesBalance
+            } finally {
+                //mongoose.connection.close()
+            }
+        })
+    },
+    withdrawBalance: async (guild, user, amount) => {
+        return await mongo().then(async mongoose => {
+            try {
+                let data = await profileSchema.findOne({ userID: user.id })
+                const updatesBalance = profileSchema.findOneAndUpdate({ userID: user.id }, { wallet: data.wallet + amount, bank: data.bank - amount })
+                return updatesBalance
+            } finally {
+                //mongoose.connection.close()
+            }
+        })
+    },
+    withdrawBalanceAll: async (guild, user) => {
+        return await mongo().then(async mongoose => {
+            try {
+                let data = await profileSchema.findOne({ userID: user.id })
+                const updatesBalance = profileSchema.findOneAndUpdate({ userID: user.id }, { wallet: data.wallet + data.bank, bank: data.bank - data.bank })
+                return updatesBalance
+            } finally {
+                //mongoose.connection.close()
+            }
+        })
+    },
 }
