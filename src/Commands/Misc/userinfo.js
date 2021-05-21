@@ -24,7 +24,7 @@ module.exports = {
             .setFooter(user.user.tag, user.user.displayAvatarURL({ dynamic: true }))
             .setTitle(`User information for ${user.user.username}`)
             .setColor(user.roles.highest.color || '2f3136')
-            .addField('User', `${user.user.tag} | ${user.user.id}`, false)
+            .addField('User', `${user.user.tag} | \`${user.user.id}\``, false)
             .addField('Created on', user.user.createdAt.toLocaleString(), true)
             .addField('Joined at', user.joinedAt.toLocaleString(), true)
             .addField('Top Role', user.roles.highest, inline)

@@ -30,7 +30,7 @@ module.exports = {
                 if (amount <= 0) return message.channel.send(`You cannot withdraw below 0 coins`)
                 if (currentBalance[1] < amount) return message.channel.send(`You don't have enough coins to withdraw`)
                 await economy.withdrawBalance(message.guild, message.author, amount)
-                message.channel.send(`Withdrew ${amount}`)
+                message.channel.send(`Withdrew ⏣${amount}`)
                 break;
         }
 

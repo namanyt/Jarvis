@@ -30,7 +30,7 @@ module.exports = {
                 if (amount <= 0) return message.channel.send(`Number can't be below 0`)
                 if (currentBalance[0] < amount) return message.channel.send(`You don't have enough coins to deposit`)
                 await economy.depositBalance(message.guild, message.author, amount)
-                message.channel.send(`Deposited ${amount}`)
+                message.channel.send(`Deposited ⏣${amount}`)
             break;
         }
         
