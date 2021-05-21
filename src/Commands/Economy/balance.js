@@ -1,6 +1,7 @@
 const { Message } = require("discord.js");
 const { info } = require('../../Utils/Utils');
 const economy = require("../../Utils/Economy");
+const { balanceEmbed } = require('../../Models/Embed');
 
 module.exports = {
     name: ['balance', 'bal'],
@@ -11,16 +12,7 @@ module.exports = {
      * @param {Message} message 
      */
     callback: async message => {
-        const target = message.mentions.users.first() || message.author;
-        const targetID = target.id;
-
-        const guildID = message.guild.id
-        const userID = targetID
-
-        const coins = await economy.getCoins(guildID, userID)
-            
-        message.channel.send(`That user has ${coins} coins !`)
-
-        info(targetID);
+        const target = message.mentions.users.first() || message.author
+        message.channel.send(balanceEmbed(target, await economy.getCoins(message.guild, target)[0], await economy.getCoins(message.guild, target)[1]));
     } 
 }

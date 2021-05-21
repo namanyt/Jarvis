@@ -2,4 +2,5 @@ TOKEN: "ODM4OTg4ODQxODIxNTM2MzM3.YJDHPw.MDB-uSQAe3WJWXSXRn12PnetM-o"
 PREFIX: "+"
 OWNER_IDS:
   - 584227289592496129
+BOT_VERSION: 0.1
 MongoDB: mongodb+srv://cider:cider@cluster0.09t2u.mongodb.net/Cluster0?retryWrites=true&w=majority
