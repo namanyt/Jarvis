@@ -2,6 +2,7 @@ const chalk = require('chalk');
 const { Guild, User } = require('discord.js');
 const profileSchema = require('../Schema/profile-schema');
 const { mongo, info } = require('./Utils');
+const Utils = require("../Utils/Utils");
 
 module.exports = (client) => { }
 
@@ -117,6 +118,30 @@ module.exports = {
                 const AuthorUpdatedBalance = (await profileSchema.findOneAndUpdate({ userID: user.id }, { wallet: AuthorData.wallet - amount})).save()
                 const TargetUpdatedBalance = (await profileSchema.findOneAndUpdate({ userID: target.id }, { wallet: TargetData.wallet + amount})).save()
                 return [AuthorUpdatedBalance, TargetUpdatedBalance]
+            } finally {
+                // mongoose.connection.close()
+            }
+        })
+    },
+    /**
+     *
+     * @param {User} user
+     * @param {User} target
+     * @param {number} amount
+     * @returns
+     */
+    robUser: async (user, target) => {
+        return await mongo().then(async mongoose => {
+            if (!user || !target) {
+                throw new Error('Incomplete parameters')
+            }
+            try {
+                let AuthorData = await profileSchema.findOne({ userID: user.id })
+                let TargetData = await profileSchema.findOne({ userID: target.id })
+                let amount = Utils.randomIntFromInterval(-AuthorData.wallet, TargetData.wallet/2)
+                const AuthorUpdatedBalance = (await profileSchema.findOneAndUpdate({ userID: user.id }, { wallet: AuthorData.wallet + amount })).save()
+                const TargetUpdatedBalance = (await profileSchema.findOneAndUpdate({ userID: target.id }, { wallet: TargetData.wallet - amount })).save()
+                return amount
             } finally {
                 // mongoose.connection.close()
             }

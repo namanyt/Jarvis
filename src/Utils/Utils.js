@@ -13,12 +13,27 @@ function info(message) {
 
 /**
  * 
- * @param {Error} error 
+ * @param {Error} error
  * @returns 
  */
 function error(error) {
     return console.error(`${timestamp}  [ERROR (${error.name})] ${error.message}`);
 }
+
+/**
+ * 
+ * @param {number} max 
+ * @returns
+ */
+function generateRanodmInt(max) { return Math.floor((Math.random() * max) + 1) }
+
+/**
+ * 
+ * @param {Number} min 
+ * @param {Number} max 
+ * @returns 
+ */
+function randomIntFromInterval(min, max) { return Math.floor(Math.random() * (max - min + 1) + min) }
 
 function botOnline() {
     const onlineMessage = (
@@ -81,4 +96,4 @@ const ResolveUser = (message, argument = 0, fullText = false) => {
     return message.guild.members.cache.find(m => m.user.tag.toLowerCase() == text.toLowerCase() || m.displayName.toLowerCase() == text.toLowerCase() || m.id == text.replace(/([<@]|[>])/g, '')) || message.mentions.members.first();
 }
 
-module.exports = { info, error, botOnline, config, mongo, getTimeDiffrence, ResolveUser };
+module.exports = { info, error, botOnline, config, mongo, getTimeDiffrence, ResolveUser, generateRanodmInt, randomIntFromInterval };
