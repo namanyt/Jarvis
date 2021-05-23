@@ -10,6 +10,7 @@ const reqNumber = {
 }
 
 const profileSchema = mongoose.Schema({
+    guildID: reqString,
     userID: reqString,
     username: reqString,
     wallet: reqNumber,

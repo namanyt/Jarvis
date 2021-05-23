@@ -39,8 +39,9 @@ module.exports = {
         return await mongo().then(async mongoose => {
             try {
                 let data = await profileSchema.findOne({ userID: user.id })
+                if (!data) return 'you dont even have a account to deposit money'
                 const updatesBalance = (await profileSchema.findOneAndUpdate({ userID: user.id }, { wallet: data.wallet - amount, bank: data.bank + amount })).save()
-                return updatesBalance
+                return `Deposited ⏣${amount}`
             } finally {
                 //mongoose.connection.close()
             } 
@@ -57,8 +58,9 @@ module.exports = {
         return await mongo().then(async mongoose => {
             try {
                 let data = await profileSchema.findOne({ userID: user.id })
+                if (!data) return 'you dont even have a account to deposit money'
                 const updatesBalance = (await profileSchema.findOneAndUpdate({ userID: user.id }, { wallet: data.wallet - data.wallet, bank: data.bank + data.wallet })).save()
-                return updatesBalance
+                return `Deposited all`
             } finally {
                 //mongoose.connection.close()
             }
@@ -75,8 +77,9 @@ module.exports = {
         return await mongo().then(async mongoose => {
             try {
                 let data = await profileSchema.findOne({ userID: user.id })
+                if (!data) return 'You dont event have a account to withdraw money'
                 const updatesBalance = (await profileSchema.findOneAndUpdate({ userID: user.id }, { wallet: data.wallet + amount, bank: data.bank - amount })).save()
-                return updatesBalance
+                return `Withdrew ⏣${ amount }`
             } finally {
                 //mongoose.connection.close()
             }
@@ -93,8 +96,9 @@ module.exports = {
         return await mongo().then(async mongoose => {
             try {
                 let data = await profileSchema.findOne({ userID: user.id })
+                if (!data) return 'You dont event have a account to withdraw money'
                 const updatesBalance = (await profileSchema.findOneAndUpdate({ userID: user.id }, { wallet: data.wallet + data.bank, bank: data.bank - data.bank })).save()
-                return updatesBalance
+                return `Withdrew all`
             } finally {
                 //mongoose.connection.close()
             }
