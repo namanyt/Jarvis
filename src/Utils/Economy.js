@@ -21,7 +21,7 @@ module.exports = {
                 let wallet = 100;
                 let bank = 0;
                 if (result) { wallet = result.wallet, bank = result.bank }
-                else await new profileSchema({ userID: user.id, username: user.tag, wallet, bank }).save()
+                else await new profileSchema({ guildID: guild.id, userID: user.id, username: user.tag, wallet, bank }).save()
                 return [wallet, bank];
             } finally {
                 //mongoose.connection.close()
@@ -147,4 +147,25 @@ module.exports = {
             }
         })
     },
+
+    /**
+     * @param {Guild} guild
+     * @returns 
+     */
+    currencyLeaderboard: async (guild) => {
+        return await mongo().then(async mongoose => {
+            try {
+                const a = await profileSchema.find({ guildID: guild.id }).sort({ wallet: -1 })
+                let i = 1
+                let data = a.map(user => `\`#${i++}\` ${user.wallet} - ${user.username}`).join("\n")
+                return { embed: { 
+                    title: "Money LeaderBoard",
+                    description: data,
+                    footer: { text: 'These are wallet coins, Not total.' }
+                }}
+            } finally {
+                // mongoose.connection.close()
+            }
+        })
+    }
 }
