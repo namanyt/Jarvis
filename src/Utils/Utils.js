@@ -51,6 +51,7 @@ const mongo = async () => {
     await mongoose.connect(mongoPath, { useCreateIndex: true, useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true, });
     return mongoose;
 }
+
 const getTimeDiffrence = async (date1, date2) => {
     let lang = {
         Day: "{days} day",
@@ -89,6 +90,7 @@ const getTimeDiffrence = async (date1, date2) => {
         return lang.About + result.join(" ");
     }
 }
+
 const ResolveUser = (message, argument = 0, fullText = false) => {
     const args = message.content.split(" ");
     args.shift();
