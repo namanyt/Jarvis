@@ -1,4 +1,5 @@
-const { User, MessageEmbed, Message } = require("discord.js");
+const { red } = require("chalk");
+const { User, MessageEmbed, Message, Role } = require("discord.js");
 
 /**
  * 
@@ -102,4 +103,55 @@ const userInfoEmbed = (user, message) => {
     return { embed: Embed }
 }
 
-module.exports = { balanceEmbed, userInfoEmbed };
+/**
+ * 
+ * @param {Message} message 
+ * @param {User} user 
+ * @param {string} permission 
+ * @param {string} text
+ */
+const permissionErrorEmbed = (message, user, permission) => {
+    const member = message.guild.members.cache.get(user.id)
+    const embed = {
+        title: "Permission Error",
+        description: `You don't have \`${permission}\` to run this command`,
+        color: ("#FF0000")
+    }
+
+    return { embed: embed }
+}
+
+/**
+ * 
+ * @param {Message} message 
+ * @param {User} user 
+ * @param {Role} role 
+ */
+const rolePermissionError = (message, user, role) => {
+    const member = message.guild.members.cache.get(user.id)
+    const embed = {
+        title: 'Role Error',
+        description: `You don't have ${role} to run this command`,
+        color: "#FF0000"
+    }
+
+    return { embed: embed }
+}
+
+/**
+ * 
+ * @param {Message} message 
+ * @param {User} user 
+ * @param {number} timeLeft 
+ */
+const onCooldownEmbed = (message, user, timeLeft) => {
+    const member = message.guild.members.cache.get(user.id)
+    const embed = {
+        title: 'Cooldown Error',
+        description: `Please wait for ${timeLeft.toFixed()} seconds to run this command again`,
+        color: "#FF0000"
+    }
+    return { embed: embed }
+}
+
+module.exports = { balanceEmbed, userInfoEmbed, permissionErrorEmbed, rolePermissionError, onCooldownEmbed };

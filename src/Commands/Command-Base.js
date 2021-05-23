@@ -2,6 +2,8 @@ const { info, config } = require('../Utils/Utils');
 const prefix = config.PREFIX;
 const chalk = require('chalk');
 const discord = require('discord.js')
+const { permissionErrorEmbed, rolePermissionError, onCooldownEmbed } = require('../Models/Embed')
+
 const validatePermissions = (permissions) => {
     const validPermissions = [
         'CREATE_INSTANT_INVITE',
@@ -43,7 +45,11 @@ const validatePermissions = (permissions) => {
         }
     }
 }
-
+/**
+ * 
+ * @param {discord.Client} client 
+ * @param {Object} options 
+ */
 module.exports = (client, options) => {
     const { cooldowns } = client;
     let {
@@ -107,7 +113,7 @@ module.exports = (client, options) => {
                     const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
                     if (now < expirationTime) {
                         const timeLeft = (expirationTime - now) / 1000;
-                        return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${alias}\` command.`);
+                        return channel.send(onCooldownEmbed(message, message.author, timeLeft))
                     }
                 }
                 timestamps.set(message.author.id, now);
@@ -116,9 +122,8 @@ module.exports = (client, options) => {
 
                 // Ensure the user has the required permissions
                 for (const permission of permissions) {
-                    if (!member.hasPermission(permission)) {
-                        message.reply(permissionError)
-                        return
+                    if (!member.hasPermission(permission)) { 
+                        return channel.send(permissionErrorEmbed(message, message.author, permission, permissionError))
                     }
                 }
 
@@ -129,10 +134,7 @@ module.exports = (client, options) => {
                     )
 
                     if (!role || !member.roles.cache.has(role.id)) {
-                        message.reply(
-                            `You must have the "${_role}" role to use this command.`
-                        )
-                        return
+                        return channel.send(rolePermissionError(message, message.author, role))
                     }
                 }
           
