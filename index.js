@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const client = new discord.Client();
+client.cooldowns = new discord.Collection();
 
 client.on("ready", async() => {
     botOnline();

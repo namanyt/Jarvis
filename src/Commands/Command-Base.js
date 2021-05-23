@@ -1,7 +1,7 @@
 const { info, config } = require('../Utils/Utils');
 const prefix = config.PREFIX;
 const chalk = require('chalk');
-    
+const discord = require('discord.js')
 const validatePermissions = (permissions) => {
     const validPermissions = [
         'CREATE_INSTANT_INVITE',
@@ -45,9 +45,11 @@ const validatePermissions = (permissions) => {
 }
 
 module.exports = (client, options) => {
+    const { cooldowns } = client;
     let {
         name,
         usage = '',
+        cooldown = 0,
         permissionError = 'You don\'t have Rermission(s) / Role to run this command',
         minArgs = 0,
         maxArgs = null,
@@ -55,8 +57,7 @@ module.exports = (client, options) => {
         roles = [],
         callback
     } = options;
-
-    
+    const aliasList = name
     if (typeof name === 'string') {
         name = [name]
     }
@@ -78,7 +79,7 @@ module.exports = (client, options) => {
 
     // Listen for messages
     client.on('message', (message) => {
-        const { member, content, guild } = message
+        const { member, content, guild, author, channel } = message
 
         for (const alias of name) {
             const command = `${prefix}${alias.toLowerCase()}`
@@ -88,6 +89,30 @@ module.exports = (client, options) => {
                 content.toLowerCase() === command
             ) {
                 // A command has been ran
+
+                if (!cooldowns.has(alias)) {
+                    if(Array.isArray(aliasList)) { 
+                        aliasList.forEach((cmd) => {
+                            cooldowns.set(cmd, new discord.Collection())
+                        })
+                    } else {
+                        cooldowns.set(alias, new discord.Collection())
+                    }
+                }
+                const now = Date.now()
+                
+                const timestamps = cooldowns.get(alias)
+                const cooldownAmount = cooldown * 1000
+                if (timestamps.has(message.author.id)) {
+                    const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+                    if (now < expirationTime) {
+                        const timeLeft = (expirationTime - now) / 1000;
+                        return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${alias}\` command.`);
+                    }
+                }
+                timestamps.set(message.author.id, now);
+                
+                setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
                 // Ensure the user has the required permissions
                 for (const permission of permissions) {
@@ -110,7 +135,7 @@ module.exports = (client, options) => {
                         return
                     }
                 }
-
+          
                 // Split on any number of spaces
                 const arguments = content.split(/[ ]+/)
 
@@ -127,7 +152,6 @@ module.exports = (client, options) => {
                     )
                     return
                 }
-
                 // Handle the custom command code
                 callback(message, arguments, arguments.join(' '), client)
 
