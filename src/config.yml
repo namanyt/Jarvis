@@ -24,16 +24,12 @@ Status:
     - "Banana"
     - "Nothing"
     - "Air"
-    - "Poop"
     - "this server"
     - "Myself"
     - "Pizza"
     - "Minecraft Servers"
     - "Accoucements"
     - "Everyone"
-    - "Matter"
-    - "Anti Matter"
-    - "Aaaaaa"
   type: "WATCHING"
   status: "idle"
-  interval: 1000
+  interval: 10000
