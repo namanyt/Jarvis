@@ -1,6 +1,39 @@
+# leave this blah blah blah
 TOKEN: "ODM4OTg4ODQxODIxNTM2MzM3.YJDHPw.MDB-uSQAe3WJWXSXRn12PnetM-o"
+
 PREFIX: "+"
+
 OWNER_IDS:
   - 584227289592496129
+
 BOT_VERSION: 0.1
+
 MongoDB: mongodb+srv://cider:cider@cluster0.09t2u.mongodb.net/Cluster0?retryWrites=true&w=majority
+
+Colors:
+    Bot: "#0084db"
+    Timestamp: "#808080"
+    Error: "#d60606"
+    PermissionError: "#d60606"
+    Mongo: "#06d641"
+    Command: "#068ad6"
+    InvisibleEmbed: "#2f3136"
+
+Status:
+  text: 
+    - "Banana"
+    - "Nothing"
+    - "Air"
+    - "Poop"
+    - "this server"
+    - "Myself"
+    - "Pizza"
+    - "Minecraft Servers"
+    - "Accoucements"
+    - "Everyone"
+    - "Matter"
+    - "Anti Matter"
+    - "Aaaaaa"
+  type: "WATCHING"
+  status: "idle"
+  interval: 1000

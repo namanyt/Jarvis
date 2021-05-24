@@ -2,6 +2,7 @@ const { info, config } = require('../Utils/Utils');
 const prefix = config.PREFIX;
 const chalk = require('chalk');
 const discord = require('discord.js')
+const Utils = require("../Utils/Utils")
 const { permissionErrorEmbed, rolePermissionError, onCooldownEmbed } = require('../Models/Embed')
 
 const validatePermissions = (permissions) => {
@@ -41,7 +42,7 @@ const validatePermissions = (permissions) => {
 
     for (const permission of permissions) {
         if (!validPermissions.includes(permission)) {
-            throw new Error(`There is no permission called '${permission}'`)
+            Utils.info(chalk.hex(Utils.colors.Error).bold(`[ERROR] `) + `There is no permission called '${permission}'`)
         }
     }
 }
@@ -68,7 +69,7 @@ module.exports = (client, options) => {
         name = [name]
     }
     
-    info((`Registering ${chalk.cyan.italic(name[0])} command`));
+    info((`Registering ${chalk.hex(Utils.colors.Command).italic(name[0])} command`));
 
     if (permissions.length) {
         if (typeof permissions === 'string') {

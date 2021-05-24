@@ -1,4 +1,5 @@
 const { red } = require("chalk");
+const Utils = require('../Utils/Utils')
 const { User, MessageEmbed, Message, Role } = require("discord.js");
 
 /**
@@ -115,7 +116,7 @@ const permissionErrorEmbed = (message, user, permission) => {
     const embed = {
         title: "Permission Error",
         description: `You don't have \`${permission}\` to run this command`,
-        color: ("#FF0000")
+        color: (Utils.colors.PermissionError)
     }
 
     return { embed: embed }
@@ -132,7 +133,7 @@ const rolePermissionError = (message, user, role) => {
     const embed = {
         title: 'Role Error',
         description: `You don't have ${role} to run this command`,
-        color: "#FF0000"
+        color: (Utils.colors.PermissionError)
     }
 
     return { embed: embed }
@@ -149,7 +150,7 @@ const onCooldownEmbed = (message, user, timeLeft) => {
     const embed = {
         title: 'Cooldown Error',
         description: `Please wait for ${timeLeft.toFixed()} seconds to run this command again`,
-        color: "#FF0000"
+        color: (Utils.colors.PermissionError)
     }
     return { embed: embed }
 }

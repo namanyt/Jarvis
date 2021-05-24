@@ -3,15 +3,17 @@ const chalk = require('chalk');
 const discord = require('discord.js');
 const fs = require('fs');
 const path = require('path');
+const Utils = require("./src/Utils/Utils")
 
 const client = new discord.Client();
 client.cooldowns = new discord.Collection();
 
 client.on("ready", async() => {
     botOnline();
+    Utils.ResolveStatus(client)
     await mongo().then(mongoose => {
         try {
-            info(`${chalk.green.bold('[MONGODB]')} ${'Connected to '+ chalk.green.bold('MongoDB')}`);
+            info(`${chalk.hex(Utils.colors.Mongo).bold('[MONGODB]')} ${'Connected to '+ chalk.hex(Utils.colors.Mongo).bold('MongoDB')}`);
         } finally {
             mongoose.connection.close();
         }

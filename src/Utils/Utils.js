@@ -1,11 +1,13 @@
 const chalk = require('chalk');
-const timestamp = chalk.hex(`#808080`).bold(`[${new Date().toLocaleTimeString()}]`);
 const YAML = require('yaml');
 const fs = require('fs');
 const config = YAML.parse(fs.readFileSync('./src/config.yml', 'utf-8'), { prettyErrors: true });
+const colors = config.Colors;
 const mongoose = require('mongoose');
+const { Client } = require('discord.js');
 const mongoPath = config.MongoDB;
-const botOnlineColor = chalk.hex(`#0084db`);
+const timestamp = chalk.hex(colors.Timestamp).bold(`[${new Date().toLocaleTimeString()}]`);
+const botOnlineColor = chalk.hex(colors.Bot);
 
 function info(message) {
     return console.log(`${timestamp}  ${message}`);
@@ -98,4 +100,25 @@ const ResolveUser = (message, argument = 0, fullText = false) => {
     return message.guild.members.cache.find(m => m.user.tag.toLowerCase() == text.toLowerCase() || m.displayName.toLowerCase() == text.toLowerCase() || m.id == text.replace(/([<@]|[>])/g, '')) || message.mentions.members.first();
 }
 
-module.exports = { info, error, botOnline, config, mongo, getTimeDiffrence, ResolveUser, generateRanodmInt, randomIntFromInterval };
+/**
+ * 
+ * @param {Client} bot 
+ */
+const ResolveStatus = (bot) => {
+    const interval = config.Status.interval || 5000
+    
+    setInterval(() => {
+        const text = config.Status.text
+        const type = config.Status.type
+        const _status = config.Status.status
+        let status
+        if (_status == 'idle') status = 'idle'
+        if (_status == 'dnd') status = 'dnd'
+        if (_status == 'offline') status = 'invisible'
+        if (!_status) status = 'online';
+        let index = generateRanodmInt(text.length - 1)
+        bot.user.setPresence({ activity: { name: `${text[index]}`, type: type }, status: `${status}` });
+    }, interval)
+}
+
+module.exports = { info, error, botOnline, config, mongo, getTimeDiffrence, ResolveUser, generateRanodmInt, randomIntFromInterval, colors, ResolveStatus };
