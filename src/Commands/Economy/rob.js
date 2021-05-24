@@ -3,7 +3,8 @@ const Economy = require("../../Utils/Economy");
 const Utils = require('../../Utils/Utils')
 
 module.exports = {
-    name: ['steal', 'rob'],
+    name: ['rob'],
+    cooldown: 30,
     /**
      * 
      * @param {Message} message 
