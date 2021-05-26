@@ -2,7 +2,7 @@ const { Message, Client, MessageEmbed } = require("discord.js");
 const Utils = require('../../Utils/Utils')
 
 module.exports = {
-    name: 'shop',
+    name: 'shop',   
     /**
      * 
      * @param {Message} message 
@@ -22,20 +22,10 @@ module.exports = {
             .setTimestamp()
         
         if (!category) {
-            let categories
-
-            for (let categories of shop) {
-                embed.addField(`${categories.Name}`, `Id: \`${categories.Id}\` \nDescription: ${categories.description}`)
-            }
+            for (let categories of shop) embed.addField(`${categories.Name}`, `Id: \`${categories.Id}\` \nDescription: ${categories.description}`)
             return message.channel.send({ embed: embed })
         }        
         
-        // message.channel.send(
-        //     `Name: ${_name}` + "\n" +
-        //     `Price: ${_price}` + "\n" +
-        //     `Description ${_description}`
-        // )
-
         for (let items of shop) {
             const _name = items.Name;
             const _description = items.Description;
