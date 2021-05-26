@@ -3,6 +3,7 @@ const YAML = require('yaml');
 const fs = require('fs');
 const config = YAML.parse(fs.readFileSync('./src/config.yml', 'utf-8'), { prettyErrors: true });
 const colors = config.Colors;
+const shop = YAML.parse(fs.readFileSync('./src/Models/Shop.yml', 'utf-8'), { prettyErrors: true });
 const mongoose = require('mongoose');
 const { Client } = require('discord.js');
 const mongoPath = config.MongoDB;
@@ -47,6 +48,18 @@ function botOnline() {
     )
 
     return console.log(onlineMessage);
+}
+
+/**
+ * 
+ * @param {string} category 
+ * @returns {Array<object>} if category is undefined
+ */
+const showShop = (category) => {
+    // console.log(shop);
+    if (!category) return shop.Categories
+    else if (category == 'electronics') return shop.Electronics
+    else return
 }
 
 const mongo = async () => {
@@ -121,4 +134,4 @@ const ResolveStatus = (bot) => {
     }, interval)
 }
 
-module.exports = { info, error, botOnline, config, mongo, getTimeDiffrence, ResolveUser, generateRanodmInt, randomIntFromInterval, colors, ResolveStatus };
+module.exports = { info, error, botOnline, config, mongo, getTimeDiffrence, ResolveUser, generateRanodmInt, randomIntFromInterval, colors, ResolveStatus, showShop };

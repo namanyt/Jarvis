@@ -1,0 +1,19 @@
+Categories:
+- Name: Electronics
+  Id: electronics
+  description: Bunch of electronics that run on some form of electricity :p
+- Name: Electronics
+  Id: electronics
+  description: Bunch of electronics that run on some form of electricity :p
+
+
+Electronics:
+  - Name: Phone
+    Id: phone
+    Description: Make Phone calls
+    Price: 100
+  
+  - Name: Laptop
+    Id: lapotp
+    Description: Used to Post Memes
+    Price: 1000
