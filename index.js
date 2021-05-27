@@ -3,14 +3,15 @@ const chalk = require('chalk');
 const discord = require('discord.js');
 const fs = require('fs');
 const path = require('path');
-const Utils = require("./src/Utils/Utils")
+const Utils = require("./src/Utils/Utils");
+require('events').EventEmitter.prototype._maxListeners = 1000;
 
 const client = new discord.Client();
+require('discord-buttons')(client);
 client.cooldowns = new discord.Collection();
 
 client.on("ready", async() => {
     botOnline();
-    Utils.ResolveStatus(client)
     await mongo().then(mongoose => {
         try {
             info(`${chalk.hex(Utils.colors.Mongo).bold('[MONGODB]')} ${'Connected to '+ chalk.hex(Utils.colors.Mongo).bold('MongoDB')}`);
@@ -19,6 +20,7 @@ client.on("ready", async() => {
         }
     });
     readCommand('src/Commands')
+    Utils.ResolveStatus(client)
 });
 
 client.login(config.TOKEN);
