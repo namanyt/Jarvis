@@ -16,7 +16,6 @@ module.exports = {
             .setStyle('url')
             .setURL('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
             .setID('Click Me !')
-            .setStyle('emoji')
         
         message.channel.send(`Ayo`, btn);
     },
