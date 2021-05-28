@@ -3,6 +3,6 @@ module.exports = {
     roles: ['🌟'],
     cooldown: 100,
     callback: message => {
-        message.channel.send("Test(s) Successful");
+        message.lineReply('Test(s) Successful').then(msg => { msg.delete({ timeout: 5000 }); message.delete({ timeout: 5000 }); })
     }
 }

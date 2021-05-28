@@ -1,6 +1,7 @@
 const { info, config, botOnline, mongo } = require('./src/Utils/Utils');
 const chalk = require('chalk');
 const discord = require('discord.js');
+require('discord-reply');
 const fs = require('fs');
 const path = require('path');
 const Utils = require("./src/Utils/Utils");
