@@ -1,19 +1,18 @@
-Categories:
-- Name: Electronics
-  Id: electronics
-  description: Bunch of electronics that run on some form of electricity :p
-- Name: Electronics
-  Id: electronics
-  description: Bunch of electronics that run on some form of electricity :p
-
-
-Electronics:
-  - Name: Phone
+Items:
+  - Name: <:phone:847470088835563581> Phone
     Id: phone
-    Description: Make Phone calls
+    Type: Item
+    Description: Text your friends! Fun for the entire family
     Price: 100
-  
-  - Name: Laptop
-    Id: lapotp
-    Description: Used to Post Memes
+
+  - Name: <:laptop:847470089023782932> Laptop
+    Id: laptop
+    Type: Item
+    Description: Post some sweet sweet memes for that sweet sweet ad revenue
     Price: 1000
+
+  - Name: '<:devlogo:847470089090498570> Developers'
+    Id: dev
+    Type: Role
+    Description: 'gives @Developers role'
+    Price: 250

@@ -55,11 +55,8 @@ function botOnline() {
  * @param {string} category 
  * @returns {Array<object>} if category is undefined
  */
-const showShop = (category) => {
-    // console.log(shop);
-    if (!category) return shop.Categories
-    else if (category == 'electronics') return shop.Electronics
-    else return
+const showShop = () => {
+    return shop.Items;
 }
 
 const mongo = async () => {

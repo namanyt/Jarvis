@@ -151,7 +151,7 @@ module.exports = (client, options) => {
                     (maxArgs !== null && arguments.length > maxArgs)
                 ) {
                     message.reply(
-                        `Incorrect syntax! Use ${prefix}${alias} ${usage}`
+                        `Incorrect syntax! Use \`${prefix}${alias} ${usage}\``
                     )
                     return
                 }

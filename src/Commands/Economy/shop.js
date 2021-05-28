@@ -11,27 +11,21 @@ module.exports = {
      * @param {Client} client 
      */
     callback: (message, args, text, client) => {
-        const category = args[0]
-        const shop = Utils.showShop(category)
-        if (!shop) return message.channel.send('Category not availabe')
+        const Develpers = message.guild.roles.cache.find(role => role.name == "Developer")
+        const shop = Utils.showShop()
 
         const embed = new MessageEmbed()
             .setTitle('Shop')
             .setDescription('Dukan Bhai :p')
-            .setColor(Utils.colors.InvisibleEmbed)
             .setTimestamp()
-        
-        if (!category) {
-            for (let categories of shop) embed.addField(`${categories.Name}`, `Id: \`${categories.Id}\` \nDescription: ${categories.description}`)
-            return message.channel.send({ embed: embed })
-        }        
-        
+
         for (let items of shop) {
             const _name = items.Name;
-            const _description = items.Description;
-            const _price = items.Price;
+            const _description = items.Description.replace('@Developers', `${Develpers}`);
+            const _price = `⏣${items.Price}`;
             const _id = items.Id;
-            embed.addField(`${_name}`, `Price: \`${_price}\`\n${_description}\nId: \`${_id}\``)
+            // `${_description}\n Id: \`${_id}\`\n[${_price}](https://discordjs.guide/popular-topics/embeds.html#embed-preview)`
+            embed.addField(`** **`, `**${_name}** — [${_price}](https://www.youtube.com/watch?v=YddwkMJG1Jo)\n${_description}`, true);
         }
         return message.channel.send({ embed: embed })
     }
