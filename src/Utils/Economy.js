@@ -21,7 +21,7 @@ module.exports = {
                 let wallet = 100;
                 let bank = 0;
                 if (result) { wallet = result.wallet, bank = result.bank }
-                else await new profileSchema({ guildID: guild.id, userID: user.id, username: user.tag, wallet, bank }).save()
+                else await new profileSchema({ guildID: guild.id, userID: user.id, username: user.tag, wallet, bank, inventory: {} }).save()
                 return [wallet, bank];
             } finally {
                 //mongoose.connection.close()

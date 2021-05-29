@@ -87,7 +87,7 @@ module.exports = (client, options) => {
     // Listen for messages
     client.on('message', (message) => {
         const { member, content, guild, author, channel } = message
-
+        if (channel.type == 'dm' || author.bot) return;
         for (const alias of name) {
             const command = `${prefix}${alias.toLowerCase()}`
 
