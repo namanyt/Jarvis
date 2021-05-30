@@ -3,3 +3,4 @@ package-lock.json
 /target
 .vscode
 /Assets
+src/config.yml
