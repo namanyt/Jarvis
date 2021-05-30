@@ -23,6 +23,7 @@
     "discord-buttons": "^2.4.1",
     "discord-reply": "^0.1.2",
     "discord.js": "^12.5.3",
+    "got": "^11.8.2",
     "mongoose": "^5.12.10",
     "yaml": "^1.10.2"
   }
